@@ -1,0 +1,16 @@
+# Compiled binaries
+pricing
+*.out
+*.o
+
+# Data files (generated plots)
+*.csv
+
+# Editor files
+.vscode/
+
+# Python cache
+__pycache__/
+
+# Linux temp files
+*~
