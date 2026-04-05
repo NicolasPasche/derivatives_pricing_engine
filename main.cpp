@@ -44,6 +44,7 @@ int main() {
         std::cout << "Lower bound: " << S - K * std::exp(-r * T) << " Upper bound: " << S << std::endl;
     }
 
+/*
     // Collect data for different plots in python
     // Testing the Call Option
     // Call price vs Strike
@@ -91,4 +92,49 @@ int main() {
     file_spot.close();
 
 
+    // Testing the Put Option
+    // Put price vs Strike
+    std::ofstream file_put_strike("put_vs_strike.csv");
+
+    file_put_strike << "Strike,PutPrice\n";
+
+    for (double strike = 50; strike <= 150; strike += 2) {
+
+        double C = put_price(S, strike, r, d, sigma, T);
+        file_put_strike << strike << "," << C << "\n";
+
+    }
+
+    file_put_strike.close();
+
+    // Put price vs Spot
+    std::ofstream file_put_spot("put_vs_spot.csv");
+
+    file_put_spot << "Spot,PutPrice\n";
+
+    for (double spot = 50; spot <= 150; spot += 2) {
+
+        double C = put_price(spot, K, r, d, sigma, T);
+        file_put_spot << spot << "," << C << "\n";
+
+    }
+
+    file_put_spot.close();
+
+    // Put price vs Volatility
+    std::ofstream file_put_vol("put_vs_vol.csv");
+
+    file_put_vol << "Vol,PutPrice\n";
+
+    for (double vol = 0.05; vol <= 0.50; vol += 0.01) {
+
+        double C = put_price(S, K, r, d, vol, T);
+        file_put_vol << vol << "," << C << "\n";
+
+    }
+
+    file_put_vol.close();
+*/
+
 }
+        
