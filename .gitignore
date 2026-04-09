@@ -1,16 +1,13 @@
 # Compiled binaries
-pricing
 *.out
 *.o
+*.exe
+test_rng
+histgram
+pricing
 
-# Data files (generated plots)
+# CSV files
 *.csv
-
-# Editor files
-.vscode/
 
 # Python cache
 __pycache__/
-
-# Linux temp files
-*~
