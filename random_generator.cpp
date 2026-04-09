@@ -30,4 +30,4 @@ RandomNumberGenerator::get_normal_vector() {
     }
 
     return result;
-}
+} 
