@@ -6,7 +6,7 @@
     dimension determines how many random numbers are generated per path.
 */
 
-RandomNumberGenerator::RandomNumberGenerator(int dim)
+RandomGenerator::RandomGenerator(int dim)
     : generator(std::random_device{}()),
       distribution(0.0, 1.0),
       dimension(dim)
@@ -19,7 +19,7 @@ RandomNumberGenerator::RandomNumberGenerator(int dim)
 */
 
 std::vector<double>
-RandomNumberGenerator::get_normal_vector() {
+RandomGenerator::get_normal_vector() {
 
     std::vector<double> result(dimension);
 

@@ -9,7 +9,7 @@ int main() {
     int dimension = 1;
     int num_samples = 1000000;
 
-    RandomNumberGenerator rng(dimension);
+    RandomGenerator rng(dimension);
 
     double sum = 0.0;
     double sum_sq = 0.0;
@@ -28,7 +28,7 @@ int main() {
     double mean = sum / num_samples;
     double variance = (sum_sq / num_samples) - (mean * mean);
 
-    RandomNumberGenerator rng2(5);
+    RandomGenerator rng2(5);
 
     auto Z = rng2.get_normal_vector();
 

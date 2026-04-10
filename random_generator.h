@@ -11,7 +11,7 @@
     The generator returns a vecotr of normally distributet numbers. The Size of this vector is the dimensionality of the simulation
 */
 
-class RandomNumberGenerator {
+class RandomGenerator {
 
     private:
         std::mt19937 generator; // Mersenne Twister random number generator
@@ -22,7 +22,7 @@ class RandomNumberGenerator {
     public:
 
         // Constructor
-        RandomNumberGenerator(int dim);
+        RandomGenerator(int dim);
 
         // Generate a vector of normal random numbers
         std::vector<double> get_normal_vector();
