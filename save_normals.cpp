@@ -3,7 +3,7 @@
 
 int main() {
 
-    RandomNumberGenerator rng(1);
+    RandomGenerator rng(1);
 
     std::ofstream file("normal_samples.csv");
 
