@@ -30,6 +30,7 @@ The following European option pricing functions are implemented:
 - Arbitrage Bounds
 - Monotonicity Tests
 - Convexity Tests
+- Expected terminal Price
 
 The implementation is modular and designed to allow easy extension to additional derivatives.
 
@@ -112,11 +113,10 @@ where:
 
 ## In Progress
 
-- Monte Carlo pricing engine
+- Monte Carlo pricing fir vanilla derivatives
 
 ## Planned
 
-- Monte Carlo pricing for European options
 - Confidence interval estimation
 - Variance reduction methods
 - Path-dependent derivatives
