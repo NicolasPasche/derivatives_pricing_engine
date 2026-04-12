@@ -1,12 +1,65 @@
 #include "instruments.h"
 #include "test_utils.h"
+#include "random_generator.h"
+#include "monte_carlo.h"
+#include "mc_payoffs.h"
 
 #include <cmath>
 #include <iostream>
 #include <fstream>
 
 int main() {
-    // Tests
+
+    // Testing the Monte Carlo Engine
+
+    // RNG 
+    RandomGenerator rng(1);
+
+    // Market parameters
+    double S0 = 100;
+    double K = 100;
+    double r = 0.05;
+    double d = 0.00;
+    double sigma = 0.20;
+    double T = 1.0;
+
+    int num_simulations = 100000;
+
+    // Monte Carlo payoff
+    auto payoff = call_payoff(K);
+
+    // Monte Carlo price
+    double mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        payoff
+    );
+
+    // Analytical Black-Scholes price
+    double bs_price = call_price(
+        S0, 
+        K, 
+        r, 
+        d, 
+        sigma, 
+        T
+    );
+
+    std::cout << "Prices for Call Option" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << mc_price << std::endl;
+
+    /*
+
+    Writing some test just to make sure the vanilla black scholes engine works and 
+    all the instruments are implemented correctly
+
+
     double S = 100;
     double K = 100;
     double r = 0.05;
@@ -43,6 +96,7 @@ int main() {
         std::cout << "Call price: " << call_price_value << std::endl;
         std::cout << "Lower bound: " << S - K * std::exp(-r * T) << " Upper bound: " << S << std::endl;
     }
+*/
 
 /*
     // Collect data for different plots in python
