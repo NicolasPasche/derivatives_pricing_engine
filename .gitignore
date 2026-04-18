@@ -3,6 +3,7 @@
 *.o
 *.exe
 test_rng
+test_mc
 histgram
 pricing
 
