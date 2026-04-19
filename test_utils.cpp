@@ -13,10 +13,11 @@ std::string print_all_prices(
     double T
 ) {
     double zcb = zero_coupon_bond(r, T);
-    double forward = forward_price(S, r, d, T);
+    double forward = forward_price(S, K, r, d, T);
+
     double call = call_price(S, K, r, d, sigma, T);
     double put = put_price(S, K, r, d, sigma, T);
-
+    
     double dig_c = digital_call_price(S, K, r, d, sigma, T);
     double dig_p = digital_put_price(S, K, r, d, sigma, T);
 

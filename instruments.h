@@ -7,6 +7,7 @@ double zero_coupon_bond(
 
 double forward_price(
     double S, 
+    double K, 
     double r, 
     double d, 
     double T

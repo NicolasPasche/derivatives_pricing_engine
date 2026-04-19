@@ -25,11 +25,16 @@ int main() {
 
     int num_simulations = 100000;
 
-    // Monte Carlo payoff
-    auto payoff = call_payoff(K);
+    // Monte Carlo payoff for all derivatives
+    auto call_option_payoff = call_payoff(K);
+    auto put_option_payoff = put_payoff(K);
+    auto digital_call_option_payoff = digital_call_payoff(K);
+    auto digital_put_option_payoff = digital_put_payoff(K);
+    auto forward_contract_payoff = forward_payoff(K);
+    auto zero_coupon_bond_payoff = zcb_payoff(T);
 
-    // Monte Carlo price
-    double mc_price = monte_carlo_price(
+    // Monte Carlo Zero Coupon bond price
+    double zcb_mc_price = monte_carlo_price(
         S0, 
         r, 
         d, 
@@ -37,11 +42,58 @@ int main() {
         T, 
         num_simulations, 
         rng, 
-        payoff
+        zero_coupon_bond_payoff
     );
 
     // Analytical Black-Scholes price
-    double bs_price = call_price(
+    double bs_zcb_price = zero_coupon_bond(
+        r, 
+        T
+    );
+
+    std::cout << "\nPrices for Zero Coupon Bond" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_zcb_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << zcb_mc_price << std::endl;
+
+    // Monte Carlo Forward price
+    double forward_mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        forward_contract_payoff
+    );
+
+    // Analytical Black-Scholes price
+    double bs_forward_price = forward_price(
+        S0, 
+        K, 
+        r, 
+        d, 
+        T
+    );
+
+    std::cout << "\nPrices for Forward Contract" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_forward_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << forward_mc_price << std::endl;
+
+    // Monte Carlo call price
+    double call_mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        call_option_payoff
+    );
+
+    // Analytical Black-Scholes price
+    double bs_call_price = call_price(
         S0, 
         K, 
         r, 
@@ -50,9 +102,87 @@ int main() {
         T
     );
 
-    std::cout << "Prices for Call Option" << std::endl;
-    std::cout << "Analytical Black-Scholes Price: " << bs_price << std::endl;
-    std::cout << "Numerical Monte Carlo Price: " << mc_price << std::endl;
+    std::cout << "\nPrices for Call Option" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_call_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << call_mc_price << std::endl;
+
+    // Monte Carlo put price
+    double put_mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        put_option_payoff
+    );
+
+    // Analytical Black-Scholes put price
+    double bs_put_price = put_price(
+        S0, 
+        K, 
+        r, 
+        d, 
+        sigma, 
+        T
+    );
+
+    std::cout << "\nPrices for Put Option" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_put_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << put_mc_price << std::endl;
+
+    // Monte Carlo digital call option price
+    double digital_call_mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        digital_call_option_payoff
+    );
+
+    // Analytical Black-Scholes digital call price
+    double bs_digital_call_price = digital_call_price(
+        S0, 
+        K, 
+        r, 
+        d, 
+        sigma, 
+        T
+    );
+
+    std::cout << "\nPrices for Digital Call Option" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_digital_call_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << digital_call_mc_price << std::endl;
+
+    // Monte Carlo digital put option price
+    double digital_put_mc_price = monte_carlo_price(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng, 
+        digital_put_option_payoff
+    );
+
+    // Analytical Black-Scholes digital call price
+    double bs_digital_put_price = digital_put_price(
+        S0, 
+        K, 
+        r, 
+        d, 
+        sigma, 
+        T
+    );
+
+    std::cout << "\nPrices for Digital Put Option" << std::endl;
+    std::cout << "Analytical Black-Scholes Price: " << bs_digital_put_price << std::endl;
+    std::cout << "Numerical Monte Carlo Price: " << digital_put_mc_price << std::endl;
 
     /*
 

@@ -13,11 +13,12 @@ double zero_coupon_bond(
 
 double forward_price(
     double S, 
+    double K,
     double r, 
     double d, 
     double T
 ) {
-    return S * std::exp((r-d) * T);
+    return S * std::exp(-d * T) - K * std::exp(-r * T);
 }
 
 double call_price(
