@@ -7,6 +7,9 @@
 #include "derivatives/forward_contract.h"
 #include "derivatives/zero_coupon_bond.h"
 
+// Monte Carlo OOP Engine
+#include "engines/monte_carlo_engine.h"
+
 #include <memory>
 #include <vector>
 
@@ -38,7 +41,18 @@ int main() {
 
     int num_simulations = 100000;
 
-    // Testing new OOP stuff
+    // Testing new OOP stuff (derivatives and monte carlo)
+    // Initializing Monte Carlo Engine
+    MonteCarloEngine mc(
+        S0, 
+        r, 
+        d, 
+        sigma, 
+        T, 
+        num_simulations, 
+        rng
+    );
+
     // Vector for all derivatives
     std::vector<std::unique_ptr<Derivative>> derivatives;
 
@@ -84,28 +98,15 @@ int main() {
         )
     );
 
-    for (const auto& derivative : derivatives) {
-        double mc_price = 
-            monte_carlo_price(
-                S0, 
-                r, 
-                d, 
-                sigma, 
-                T, 
-                num_simulations, 
-                rng, 
-                [&](double ST) {
-                    return derivative->payoff(ST);
-                }
-            );
-        
-            double analytical_price = 
-                derivative->analytical_price();
+    for (const auto& d : derivatives) {
 
-            std::cout << "\nPrices for " << derivative->name() << std::endl;
-            std::cout << "Analytical Price: " << analytical_price << std::endl;
-            std::cout << "Monte Carlo Price: " << mc_price << std::endl;
+        double analytical = d->analytical_price();
 
+        double mc_price = mc.price(*d);
+
+        std::cout << "\nPrices for " << d->name() << std::endl;
+        std::cout << "Analytical Price: " << analytical << std::endl;
+        std::cout << "Monte Carlo Price: " << mc_price << std::endl;
     }
 
     /*
