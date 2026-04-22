@@ -1,17 +1,30 @@
+// Stuff for OOP Engine
+#include "derivatives/derivative.h"
+#include "derivatives/call_option.h"
+#include "derivatives/put_option.h"
+#include "derivatives/digital_call_option.h"
+#include "derivatives/digital_put_option.h"
+#include "derivatives/forward_contract.h"
+#include "derivatives/zero_coupon_bond.h"
+
+#include <memory>
+#include <vector>
+
+// Function based pricing stuff
 #include "instruments.h"
 #include "test_utils.h"
+
+// Monte Carlo Stuff
 #include "random_generator.h"
 #include "monte_carlo.h"
 #include "mc_payoffs.h"
 
+// Just stuff for general purpose
 #include <cmath>
 #include <iostream>
 #include <fstream>
 
 int main() {
-
-    // Testing the Monte Carlo Engine
-
     // RNG 
     RandomGenerator rng(1);
 
@@ -25,6 +38,78 @@ int main() {
 
     int num_simulations = 100000;
 
+    // Testing new OOP stuff
+    // Vector for all derivatives
+    std::vector<std::unique_ptr<Derivative>> derivatives;
+
+    // Adding Call Option
+    derivatives.push_back(
+        std::make_unique<CallOption>(
+            S0, K, r, d, sigma, T
+        )
+    );
+
+    // Adding Put Option
+    derivatives.push_back(
+        std::make_unique<PutOption>(
+            S0, K, r, d, sigma, T
+        )
+    );
+
+    // Adding Digital Call Option
+    derivatives.push_back(
+        std::make_unique<DigitalCallOption>(
+            S0, K, r, d, sigma, T
+        )
+    );
+
+    // Adding Digital Put Option
+    derivatives.push_back(
+        std::make_unique<DigitalPutOption>(
+            S0, K, r, d, sigma, T
+        )
+    );
+
+    // Adding Forward Contract
+    derivatives.push_back(
+        std::make_unique<ForwardContract>(
+            S0, K, r, d, T
+        )
+    );
+
+    // Adding Zero Coupon Bond
+    derivatives.push_back(
+        std::make_unique<ZeroCouponBond>(
+            r, T
+        )
+    );
+
+    for (const auto& derivative : derivatives) {
+        double mc_price = 
+            monte_carlo_price(
+                S0, 
+                r, 
+                d, 
+                sigma, 
+                T, 
+                num_simulations, 
+                rng, 
+                [&](double ST) {
+                    return derivative->payoff(ST);
+                }
+            );
+        
+            double analytical_price = 
+                derivative->analytical_price();
+
+            std::cout << "\nPrices for " << derivative->name() << std::endl;
+            std::cout << "Analytical Price: " << analytical_price << std::endl;
+            std::cout << "Monte Carlo Price: " << mc_price << std::endl;
+
+    }
+
+    /*
+    // Testing the Monte Carlo Engine
     // Monte Carlo payoff for all derivatives
     auto call_option_payoff = call_payoff(K);
     auto put_option_payoff = put_payoff(K);
@@ -183,6 +268,8 @@ int main() {
     std::cout << "\nPrices for Digital Put Option" << std::endl;
     std::cout << "Analytical Black-Scholes Price: " << bs_digital_put_price << std::endl;
     std::cout << "Numerical Monte Carlo Price: " << digital_put_mc_price << std::endl;
+
+    */
 
     /*
 
