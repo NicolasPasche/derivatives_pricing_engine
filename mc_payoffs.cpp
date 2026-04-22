@@ -27,7 +27,7 @@ std::function<double(double)> digital_put_payoff(double K) {
 
 std::function<double(double)> forward_payoff(double K) {
     return [K](double ST){
-        return ST - K;
+        return ST - K; // Not Level
     };
 }
 

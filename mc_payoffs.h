@@ -11,6 +11,6 @@ std::function<double(double)> digital_call_payoff(double K);
 
 std::function<double(double)> digital_put_payoff(double K);
 
-std::function<double(double)> forward_payoff(double K);
+std::function<double(double)> forward_payoff(double K); // First I accidently used forward level. Not payoff. Bug fixed
 
 std::function<double(double)> zcb_payoff(double T);
