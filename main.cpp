@@ -109,6 +109,13 @@ int main() {
         std::cout << "Monte Carlo Price: " << mc_price << std::endl;
     }
 
+    std::cout << "\n------------------------------" << std::endl;
+    std::cout << "Tests" << std::endl;
+
+    std::cout << "Put-Call Parity Check: " << put_call_parity_check(S0, K, r, d, sigma, T) << std::endl;
+    std::cout << "Digital Put-Call Parity Check: " << digital_put_call_parity_check(S0, K, r, d, sigma, T) << std::endl;
+    std::cout << "Call Value Range Check: " << call_value_range_check(S0, K, r, d, sigma, T) << std::endl;
+
     /*
     // Testing the Monte Carlo Engine
     // Monte Carlo payoff for all derivatives
