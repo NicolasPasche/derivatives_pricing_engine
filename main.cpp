@@ -98,15 +98,18 @@ int main() {
         )
     );
 
-    for (const auto& d : derivatives) {
+    for (const auto& derivative : derivatives) {
 
-        double analytical = d->analytical_price();
+        double analytical = derivative->analytical_price();
 
-        double mc_price = mc.price(*d);
+        MonteCarloEngine::MCResult result = mc.price(*derivative);
+        double mc_price = result.price;
+        double standard_error = result.standard_error;
 
-        std::cout << "\nPrices for " << d->name() << std::endl;
+        std::cout << "\nPrices for " << derivative->name() << std::endl;
         std::cout << "Analytical Price: " << analytical << std::endl;
         std::cout << "Monte Carlo Price: " << mc_price << std::endl;
+        std::cout << "Standard Error: " << standard_error << std::endl;
     }
 
     std::cout << "\n------------------------------" << std::endl;

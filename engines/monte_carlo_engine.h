@@ -28,5 +28,11 @@ class MonteCarloEngine {
 
         double simulate_terminal_price();
 
-        double price(const Derivative& derivative);
+        struct MCResult {
+            double price;
+            double standard_error;
+        };
+
+        MCResult price(const Derivative& Derivative);
+
 };

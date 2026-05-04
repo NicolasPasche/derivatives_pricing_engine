@@ -28,18 +28,28 @@ double MonteCarloEngine::simulate_terminal_price() {
     return ST;
 }
 
-double MonteCarloEngine::price(
+struct MonteCarloEngine::MCResult MonteCarloEngine::price(
     const Derivative& derivative
 ) {
-    double payoff_sum = 0.0;
+    double mean = 0.0;
+    double M2 = 0.0;
+    int n = 0;
 
     for (int i = 0; i < num_simulations; ++i) {
         double ST = simulate_terminal_price();
 
-        payoff_sum += derivative.payoff(ST);
+        double payoff = derivative.payoff(ST);
+        double discounted_payoff = std::exp(-r * T) * payoff;
+
+        n++;
+        double delta = discounted_payoff - mean;
+        mean += delta / n;
+        double delta2 = discounted_payoff - mean;
+        M2 += delta * delta2;
     }
 
-    double average = payoff_sum / num_simulations;
+    double variance = M2 / (n - 1);
+    double standard_error = std::sqrt(variance / n);
 
-    return std::exp(-r * T) * average;
-}
+    return {mean, standard_error};
+} 
